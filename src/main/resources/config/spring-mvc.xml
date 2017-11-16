@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
+	<mvc:default-servlet-handler/>
+	<context:annotation-config />
+	
+	<context:property-placeholder location="classpath*:/properties/config.properties"/> 
+	
+	<!-- 扫描器，使spring自动把带有 @Controller注解的类注册为Bean -->
+	<context:component-scan base-package="com.zhai.controller" use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" 
+			expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+		<context:include-filter type="annotation" 
+			expression="org.springframework.context.annotation.Configuration"/>
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+	<!-- 自定义拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+        	<!-- 需拦截的地址 -->
+            <mvc:mapping path="/**"/>
+            <!-- 需排除拦截的地址 -->  
+            <mvc:exclude-mapping path="/index"/>
+            <mvc:exclude-mapping path="/index.html"/>
+            <mvc:exclude-mapping path="/404.html"/>
+            <mvc:exclude-mapping path="/500.html"/>
+            <mvc:exclude-mapping path="/login*"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/favicon.ico"/>
+            <bean class="com.zhai.utils.SecurityInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+	<!--<mvc:resources mapping="/favicon.ico" location="/favicon.ico"/>-->
+	
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8"></constructor-arg>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			 	<!--<property name="objectMapper" ref="customObjectMapper"></property>-->
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<!-- <property name="objectMapper">
+					<bean class="com.github.miemiedev.mybatis.paginator.jackson2.PageListJsonMapper" />
+				</property> -->
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html; charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+				<!-- <property name="objectMapper">  
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">  
+                        <property name="dateFormat">  
+                            <bean class="java.text.SimpleDateFormat">  
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
+                            </bean>  
+                        </property>  
+                    </bean>  
+                </property> -->
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<aop:aspectj-autoproxy />
+	<aop:config proxy-target-class="true"></aop:config>
+	
+	<!-- 处理静态资源请求 -->
+	<!--<mvc:resources mapping="/resources/**" location="/resources/" />-->
+	
+	<!--<bean id="customObjectMapper" class="cn.teacheredu.controller.covert.CustomObjectMapper"></bean>-->
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<!-- <property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />json转换器
+			</list>
+		</property> -->
+	</bean>
+
+	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 p:prefix中模板放置路径 -->
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/view/" />
+		<property name="velocityProperties">    
+        <props>    
+            <prop  key="input.encoding">UTF-8</prop>    
+            <prop  key="output.encoding">UTF-8</prop>      
+         </props>    
+     </property> 
+	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="toolboxConfigLocation" value="/WEB-INF/velocityToolBox.xml" />
+		<!-- <property name="viewClass" value="org.springframework.web.servlet.view.velocity.VelocityLayoutView" /> -->
+	 	<!--<property name="viewClass" value="cn.teacheredu.utils.MyVelocityToolboxView"/>-->
+		<property name="cache" value="true" />
+		<property name="prefix" value="/" />
+		<property name="layoutUrl" value="layout/layout.vm" />
+		<property name="suffix" value=".vm" />
+		<property name="contentType"><value>text/html;charset=UTF-8</value></property>
+		<property name="requestContextAttribute" value="pms" />  
+	</bean>
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
+		p:prefix="/WEB-INF/view/" p:suffix=".jsp" /> -->
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+		<property name="defaultEncoding"> <value>UTF-8</value> </property> 
+		<property name="maxUploadSize"> <value>52428800</value></property> 
+		<property name="maxInMemorySize"> <value>10240</value> </property> 
+	</bean>
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+	    定义默认的异常处理页面，当该异常类型的注册时使用  
+	    <property name="defaultErrorView" value="error"></property>  
+	    定义异常处理页面用来获取异常信息的变量名，默认名为exception  
+	    <property name="exceptionAttribute" value="ex"></property>  
+	    定义需要特殊处理的异常，用类名或完全路径名作为key，异常也页名作为值 
+	    <property name="exceptionMappings">  
+	        <props>  
+	            <prop key="cn.basttg.core.exception.BusinessException">error-business</prop>  
+	            <prop key="cn.basttg.core.exception.ParameterException">error-parameter</prop>  
+	        </props>  
+	    </property>  
+	</bean> -->
+
+</beans>

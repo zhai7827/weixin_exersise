@@ -1,0 +1,43 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+	<!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"-->
+	<!--xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"-->
+	<!--xsi:schemaLocation="http://www.springframework.org/schema/context-->
+     			<!--http://www.springframework.org/schema/context/spring-context.xsd-->
+     			<!--http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd-->
+    			<!--http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd-->
+     			<!--http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">-->
+
+	<!--<bean id="KETAMA_HASH" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">-->
+        <!--<property name="staticField" value="net.spy.memcached.DefaultHashAlgorithm.KETAMA_HASH" />-->
+    <!--</bean>-->
+
+    <!--<bean id="memcachedClient" class="net.spy.memcached.spring.MemcachedClientFactoryBean">-->
+
+        <!--&lt;!&ndash; 一个字符串，包括由空格或逗号分隔的主机或IP地址与端口号 &ndash;&gt;-->
+        <!--<property name="servers" value="${memcached.servers}" />-->
+        <!--&lt;!&ndash; 指定要使用的协议(BINARY,TEXT),默认是TEXT &ndash;&gt;-->
+        <!--<property name="protocol" value="${memcached.protocol}" />-->
+        <!--&lt;!&ndash; 设置默认的转码器 &ndash;&gt;-->
+        <!--<property name="transcoder">-->
+            <!--<bean class="net.spy.memcached.transcoders.SerializingTranscoder">-->
+                <!--<property name="compressionThreshold" value="1024" />-->
+            <!--</bean>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 以毫秒为单位设置默认的操作超时时间 &ndash;&gt;-->
+        <!--<property name="opTimeout" value="${memcached.opTimeout}" />-->
+        <!--<property name="timeoutExceptionThreshold" value="${memcached.timeoutExceptionThreshold}" />-->
+        <!--&lt;!&ndash; 设置哈希算法 &ndash;&gt;-->
+        <!--<property name="hashAlg" ref="KETAMA_HASH" />-->
+        <!--&lt;!&ndash; 设置定位器类型(ARRAY_MOD,CONSISTENT),默认是ARRAY_MOD &ndash;&gt;-->
+        <!--<property name="locatorType" value="${memcached.locatorType}" />-->
+        <!--&lt;!&ndash; 设置故障模式(取消，重新分配，重试)，默认是重新分配 &ndash;&gt;-->
+        <!--<property name="failureMode" value="${memcached.failureMode}" />-->
+        <!--&lt;!&ndash; 想使用Nagle算法，设置为true &ndash;&gt;-->
+        <!--<property name="useNagleAlgorithm" value="${memcached.useNagleAlgorithm}" />-->
+
+    <!--</bean>-->
+	<!--<bean id="memcachedManager" class="cn.teacheredu.utils.SpyMemcachedManager">-->
+        <!--<property name="memcachedClient" ref="memcachedClient" />-->
+    <!--</bean>-->
+<!--</beans>-->

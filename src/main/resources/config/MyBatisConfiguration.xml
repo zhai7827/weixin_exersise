@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"./resources/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" /><!-- 说明在下面 -->
+		<setting name="lazyLoadingEnabled" value="true" /><!-- 延迟加载 -->
+		<setting name="multipleResultSetsEnabled" value="true" /><!-- 多种结果集在一条sql中返回,需要合适驱动 -->
+		<setting name="useColumnLabel" value="true" /><!-- 使用列标签代替列名 -->
+		<setting name="useGeneratedKeys" value="false" /><!-- 允许JDBC支持生成的键 -->
+		<setting name="autoMappingBehavior" value="PARTIAL" /><!-- 指定MyBatis如何映射列到字段 -->
+		<setting name="defaultExecutorType" value="SIMPLE" /> <!-- BATCH, REUSE 配置默认的执行器-->
+		<setting name="defaultStatementTimeout" value="25000" /><!-- 全局的sql超时时间 -->
+		<setting name="safeRowBoundsEnabled" value="false" /><!-- Allows using RowBounds on nested statements. -->
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" /><!-- NULL VARCHAR OTHER -->
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+	<!-- <typeAliases>
+		单个别名设置
+		<typeAlias alias="UserEntity" type="cn.teacheredu.entity.UserEntity" />
+		<typeAlias alias="DepartmentEntity" type="cn.teacheredu.entity.DepartmentEntity" />
+		<typeAlias alias="LoginLogEntity" type="cn.teacheredu.entity.LoginLogEntity" />
+		<typeAlias alias="PermissionEntity" type="cn.teacheredu.entity.PermissionEntity" />
+		<typeAlias alias="RoleEntity" type="cn.teacheredu.entity.RoleEntity" />
+		<typeAlias alias="RolePermissionsEntity" type="cn.teacheredu.entity.RolePermissionsEntity" />
+		<typeAlias alias="SystemLogEntity" type="cn.teacheredu.entity.SystemLogEntity" />
+		或者批量设置别名
+		<package name="cn.teacheredu.entity"/>
+		
+		mybatis默认支持的别名 
+				别名	    映射的类型
+				_byte	byte
+				_long	long
+				_short	short
+				_int	int
+				_integer	int
+				_double	double
+				_float	float
+				_boolean	boolean
+				string	String
+				byte	Byte
+				long	Long
+				short	Short
+				int	Integer
+				integer	Integer
+				double	Double
+				float	Float
+				boolean	Boolean
+				date	Date
+				decimal	BigDecimal
+				bigdecimal	BigDecimal
+		
+		
+	</typeAliases> -->
+</configuration>	
+<!-- 	
+	开启二级缓存,要求pojo是可序列化的!  另外,mybatis自带的缓存是不支持分布式的.
+	<select id="findUserById" parameterType="int" resultType="user" useCache="false">可以禁用二级缓存
+	<insert id="insetrUser" parameterType="cn.zhisheng.mybatis.po.User" flushCache="true">刷新缓存
+	<cache  eviction="FIFO" flushInterval="60000"  size="512" readOnly="true"/>xml文件的配置示例
+					LRU – 最近最少使用的:移除最长时间不被使用的对象。
+					FIFO – 先进先出:按对象进入缓存的顺序来移除它们。
+					SOFT – 软引用:移除基于垃圾回收器状态和软引用规则的对象。
+					WEAK – 弱引用:更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+		flushCache：如果设成true，当语句调用时一级二级缓存都会被清理掉。select语句默认是false
+		useCache：如果设成true，语句调用的结果会缓存在二级缓存里。select语句默认是true
+-->
