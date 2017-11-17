@@ -1,6 +1,7 @@
 package com.zhai.service.impl;
 
 import com.zhai.entity.weixin.send.TextMessage;
+import com.zhai.utils.JsonUtils;
 import com.zhai.utils.weixin.MessageUtil;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class CoreService {
         try {
             // 调用parseXml方法解析请求消息
             Map<String, String> requestMap = MessageUtil.parseXml(request);
+            System.out.println("requestMap=" + JsonUtils.object2Json(requestMap));
             // 发送方账号
             String fromUserName = requestMap.get("FromUserName");
             // 开发者微信号
