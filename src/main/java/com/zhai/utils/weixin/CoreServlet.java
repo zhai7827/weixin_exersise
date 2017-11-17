@@ -85,7 +85,7 @@ public class CoreServlet extends HttpServlet {
         String timestamp = request.getParameter("timestamp");
         String nonce = request.getParameter("nonce");
         String echostr = request.getParameter("echostr");
-        System.out.println(signature + "timestamp=" + timestamp + "nonce=" + nonce + "echostr=" + echostr);
+        System.out.println(signature + "timestamp=" + timestamp + "nonce=" + nonce + "echostr=" + echostr + "==" + sb.toString());
         if (SignUtil.checkSignature(signature, timestamp, nonce)) {
             fromWeiXIn = true;
             if (echostr == null) {
