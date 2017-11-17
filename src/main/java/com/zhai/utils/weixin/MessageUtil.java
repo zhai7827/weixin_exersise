@@ -75,6 +75,7 @@ public static Map<String, String> parseXml(String message)
         throws Exception {
     // 将解析结果存储在HashMap中
     Map<String, String> map = new HashMap<String, String>();
+    System.out.println("message=" + message);
     StringReader xmlReader = new StringReader(message);
     /**
      * **创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
