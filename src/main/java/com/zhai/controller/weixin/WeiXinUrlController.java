@@ -17,7 +17,7 @@ public class WeiXinUrlController {
     @RequestMapping(value="/wys")
     public  void weixinNotice(HttpServletRequest request, HttpServletResponse response){
         try {
-            System.out.println("微信消息访问");
+            System.out.println("微信消息访问测试");
             boolean b = CoreServlet.messageReceive(request, response);
         } catch (Exception e) {
             e.printStackTrace();
