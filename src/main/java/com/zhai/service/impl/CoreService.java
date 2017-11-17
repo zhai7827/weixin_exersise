@@ -20,14 +20,14 @@ public class CoreService {
      * @param request
      * @return xml
      */
-    public static String processRequest(HttpServletRequest request) {
+    public static String processRequest(String message) {
         // XML格式的消息数据
         String respXml = null;
         // 默认返回的文本消息内容
         String respContent = "未知的消息类型!";
         try {
             // 调用parseXml方法解析请求消息
-            Map<String, String> requestMap = MessageUtil.parseXml(request);
+            Map<String, String> requestMap = MessageUtil.parseXml(message);
             System.out.println("requestMap=" + JsonUtils.object2Json(requestMap));
             // 发送方账号
             String fromUserName = requestMap.get("FromUserName");

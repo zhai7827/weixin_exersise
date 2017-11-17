@@ -60,7 +60,7 @@ public class CoreServlet extends HttpServlet {
         // 请求校验
         if (SignUtil.checkSignature(signature, timestamp, nonce)) {
             // 调用核心服务类接收处理请求
-            String respXml = CoreService.processRequest(request);
+            String respXml = CoreService.processRequest("");
             out.print(respXml);
         }
         out.close();
@@ -90,7 +90,7 @@ public class CoreServlet extends HttpServlet {
             fromWeiXIn = true;
             if (echostr == null) {
                 //这个是交互过程
-                    String respXml = CoreService.processRequest(request);
+                    String respXml = CoreService.processRequest(sb.toString());
                     os.write(respXml.getBytes());
                 } else {
                 //这个是首次接入的时候 的验证 需要将echostr 原样返回
