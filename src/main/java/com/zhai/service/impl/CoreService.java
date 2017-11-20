@@ -5,7 +5,6 @@ import com.zhai.utils.JsonUtils;
 import com.zhai.utils.weixin.MessageUtil;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Map;
 
@@ -17,7 +16,7 @@ public class CoreService {
     /**
      * 处理微信发来的请求
      *
-     * @param request
+     * @param message
      * @return xml
      */
     public static String processRequest(String message) {
@@ -95,10 +94,12 @@ public class CoreService {
                     // 设置文本消息的内容
                     textMessage.setContent(respContent);
                     // 将文本消息对象转换成XML
+                System.out.println("textMessage=" + textMessage.toString());
                     respXml = MessageUtil.messageToXml(textMessage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                System.out.println("respXmlresult=" + respXml);
                 return respXml;
             }
         }
