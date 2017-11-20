@@ -27,7 +27,7 @@ public class CoreService {
         try {
             // 调用parseXml方法解析请求消息
             Map<String, String> requestMap = MessageUtil.parseXml(message);
-            System.out.println("requestMap=" + JsonUtils.object2Json(requestMap));
+            System.out.println("requestMapvalue=" + JsonUtils.object2Json(requestMap));
             // 发送方账号
             String fromUserName = requestMap.get("FromUserName");
             // 开发者微信号
