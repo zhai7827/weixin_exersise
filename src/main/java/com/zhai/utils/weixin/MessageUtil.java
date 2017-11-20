@@ -9,9 +9,9 @@ import com.zhai.entity.weixin.message.ImageMessage;
 import com.zhai.entity.weixin.message.VideoMessage;
 import com.zhai.entity.weixin.message.VoiceMessage;
 import com.zhai.entity.weixin.send.TextMessage;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
 import org.xml.sax.InputSource;
 
 import java.io.StringReader;
@@ -75,21 +75,23 @@ public static Map<String, String> parseXml(String message)
         throws Exception {
     // 将解析结果存储在HashMap中
     Map<String, String> map = new HashMap<String, String>();
-    System.out.println("message=" + message);
     StringReader xmlReader = new StringReader(message);
     /**
      * **创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
      */
     InputSource xmlSource = new InputSource(xmlReader);
-    // 从request中取得输入流
-//    InputStream inputStream = request.getInputStream();
-    // 读取输入流
-    SAXReader reader = new SAXReader();
-    Document document = reader.read(xmlSource);
+    /**
+     * *创建一个SAXBuilder*
+     */
+    SAXBuilder builder = new SAXBuilder();
+    /**
+     * *通过输入源SAX构造一个Document**
+     */
+    Document document = builder.build(xmlSource);
     // 得到XML根元素
     Element root = document.getRootElement();
     // 得到根元素的所有子节点
-    List<Element> elementList = root.elements();
+    List<Element> elementList = root.getChildren();
 
     // 遍历所有子节点
     for (Element e : elementList)
