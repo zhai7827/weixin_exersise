@@ -34,7 +34,7 @@ public class CoreService {
             String toUserName = requestMap.get("ToUserName");
             // 消息类型
             String msgType = requestMap.get("MsgType");
-
+            System.out.println("msgType=" + msgType);
             // 回复文本消息
             TextMessage textMessage = new TextMessage();
             textMessage.setToUserName(fromUserName);
