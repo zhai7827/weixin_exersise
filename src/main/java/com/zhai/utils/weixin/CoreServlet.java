@@ -91,7 +91,8 @@ public class CoreServlet extends HttpServlet {
             if (echostr == null) {
                 //这个是交互过程
                     String respXml = CoreService.processRequest(sb.toString());
-                    os.write(respXml.getBytes());
+                    System.out.println("respXml=" + respXml);
+                    os.write(respXml.getBytes("UTF-8"));
                 } else {
                 //这个是首次接入的时候 的验证 需要将echostr 原样返回
                      os.write(echostr.getBytes());
